@@ -1,5 +1,7 @@
 {
   "name": "loveos",
+  "homepage": "https://github.com/LiveOSv16-05/app.git",
+
   "version": "0.1.0",
   "private": true,
   "dependencies": {
