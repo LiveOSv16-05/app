@@ -1,9 +1,40 @@
 // EmailApp.jsx
-import React, { useState } from 'react';
-import { emails } from '/Users/sparshasrinath/Documents/Suraj_Birthday/loveos/src/data/emails.js';
+import React, { useState, useEffect } from 'react';
+import { db } from './firebase'; // import Firestore instance
+import {
+  collection,
+  query,
+  orderBy,
+  onSnapshot
+} from 'firebase/firestore';
 
 export default function EmailApp() {
+  const [emails, setEmails] = useState([]);
   const [selectedEmail, setSelectedEmail] = useState(null);
+
+  useEffect(() => {
+    // Reference to collection 'messages' (or whatever name you choose)
+    const q = query(collection(db, 'messages'), orderBy('timestamp', 'desc'));
+
+    // Subscribe to realtime updates
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const emailsData = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        emailsData.push({
+          id: doc.id,
+          subject: data.subject,
+          sender: data.sender,
+          content: data.content,
+          date: new Date(data.timestamp?.seconds * 1000).toLocaleString()
+        });
+      });
+      setEmails(emailsData);
+    });
+
+    // Clean up subscription on unmount
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div style={{ display: 'flex', height: '100%', color: '#eee', fontFamily: 'monospace' }}>

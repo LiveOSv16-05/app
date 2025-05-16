@@ -61,6 +61,9 @@ open [app]   - Open an app by name (e.g. open gallery, open email).
 joke         - Hear a funny birthday or geek joke.
 quote        - Show an inspiring birthday quote.
 fortune      - Get a motivational fortune cookie message.
+word         - Show the Word of the Day link.
+
+
     `.trim();
     addHistory(helpText);
   }
@@ -181,6 +184,11 @@ fortune      - Get a motivational fortune cookie message.
       case "fortune":
         fortuneMessage();
         break;
+      case "word":
+          addHistory("📘 Click the link below to see the Word of the Day:");
+          addHistory("🔗 https://comet-samba-067.notion.site/Vocabulary-Book-1b6a96604ed3805db65cc50b6b4e9b52");
+          break;
+        
       default:
         addHistory(`Command not found: ${cmd}`);
     }
@@ -208,9 +216,23 @@ fortune      - Get a motivational fortune cookie message.
       }}
     >
       <div style={{ flex: 1, overflowY: "auto", whiteSpace: "pre-wrap" }}>
-        {history.map((line, i) => (
-          <div key={i}>{line}</div>
-        ))}
+      {history.map((line, i) => (
+        <div key={i}>
+          {line.startsWith("🔗 ") ? (
+            <a
+              href={line.replace("🔗 ", "")}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#0ff", textDecoration: "underline" }}
+            >
+              {line.replace("🔗 ", "")}
+            </a>
+          ) : (
+            line
+          )}
+        </div>
+      ))}
+      
         <div ref={terminalEnd} />
       </div>
       <input

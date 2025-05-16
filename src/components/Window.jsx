@@ -54,7 +54,7 @@ export default function Window({ title, onClose, children, style }) {
       <div
         style={{
           flex: 1,
-          padding: 0,
+          padding: 16,
           overflowY: "hidden",  // Allow vertical scrolling if needed
         }}
       >
