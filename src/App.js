@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import Desktop from './components/Desktop';
-import EmailApp from './components//EmailApp';
+import EmailApp from './components/EmailApp';
 import SendMessageForm from './components/SendMessage';
 
 function AppRouter() {
